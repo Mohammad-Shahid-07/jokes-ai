@@ -43,7 +43,7 @@ export async function updateUserNameUser(
     if (!validatedFields.success) {
       return { error: "Something went wrong" };
     }
-    const { name } = values;    
+    const { name } = values;
     connectToDatabase();
     const userSession = await currentUser();
     if (!userSession) {
@@ -51,7 +51,7 @@ export async function updateUserNameUser(
     }
     const user = await User.findOneAndUpdate(
       { email: userSession?.email },
-      {name: name},
+      { name: name },
       { new: true },
     );
     if (!user) {
@@ -66,16 +66,11 @@ export async function updateUserNameUser(
 }
 
 export async function setNewPassword(
-  values: z.infer<typeof SetPasswordSchema>,
+  newPassword: string,
   email: string,
   pathname: string,
 ) {
   try {
-    const validatedFields = SetPasswordSchema.safeParse(values);
-    if (!validatedFields.success) {
-      return { error: "Something went wrong" };
-    }
-    const { newPassword } = values;
     connectToDatabase();
     const user = await User.findOne({ email });
     if (!user) {
@@ -96,16 +91,12 @@ export async function setNewPassword(
 }
 
 export async function changePassword(
-  values: z.infer<typeof SetPasswordSchema>,
+  oldPassword: string,
+  newPassword: string,
   email: string,
   pathname: string,
 ) {
   try {
-    const validatedFields = SetPasswordSchema.safeParse(values);
-    if (!validatedFields.success) {
-      return { error: "Something went wrong" };
-    }
-    const { oldPassword, newPassword } = values;
     if (!oldPassword) return { error: "Please enter your old password" };
     connectToDatabase();
     const user = await User.findOne({ email });
@@ -151,8 +142,7 @@ export async function deleteUser(password: string) {
   }
 }
 
-
- export async function TwoFactorSystem(params: {
+export async function TwoFactorSystem(params: {
   path: string;
   twoFactorEnabled: boolean;
 }) {
@@ -184,5 +174,4 @@ export async function deleteUser(password: string) {
 
     throw error;
   }
-} 
- 
+}

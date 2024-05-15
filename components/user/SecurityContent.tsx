@@ -1,12 +1,10 @@
 "use client";
-//[imports] 
- import { TwoFactorTogglerSchema } from "@/validations";
+//[imports]
+import { TwoFactorTogglerSchema } from "@/validations";
 import { TwoFactorSystem } from "@/actions/user.actions";
 import { Switch } from "@/components/ui/switch";
 
- 
- 
- import{ Button } from "@/components/ui/button";
+import { Button } from "@/components/ui/button";
 import {
   Card,
   CardContent,
@@ -16,11 +14,7 @@ import {
 } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { SetPasswordSchema } from "@/validations";
-import {
- 
-  changePassword,
-  setNewPassword,
-} from "@/actions/user.actions";
+import { changePassword, setNewPassword } from "@/actions/user.actions";
 
 import React, { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
@@ -40,6 +34,7 @@ import { getdbUser } from "@/actions/auth.actions";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { usePathname } from "next/navigation";
 import Loader from "@/components/auth/Loader";
+import path from "path";
 const SecuityContent = () => {
   const [user, setUser] = useState<any>({});
   const [isPending, setIsPending] = useState(false);
@@ -64,7 +59,6 @@ const SecuityContent = () => {
   const form = useForm<z.infer<typeof SetPasswordSchema>>({
     resolver: zodResolver(SetPasswordSchema),
     defaultValues: {
-
       newPassword: "",
       confirmNewPassword: "",
     },
@@ -76,14 +70,10 @@ const SecuityContent = () => {
       setIsPending(true);
       setSuccess("");
       setError("");
-      
+
       if (type === "New Password") {
         if (values.newPassword === values.confirmNewPassword) {
-          await setNewPassword({
-            newPassword: values.newPassword,
-            email: user.email,
-            path: pathname,
-          })
+          await setNewPassword(values.newPassword, user.email, pathname)
             .then((res: any) => {
               if (res?.error) {
                 setError(res.error);
@@ -100,12 +90,12 @@ const SecuityContent = () => {
         }
       } else if (type === "Change Password") {
         if (values.newPassword === values.confirmNewPassword) {
-          await changePassword({
-            oldPassword: values.oldPassword!,
-            newPassword: values.newPassword,
-            email: user.email,
-            path: pathname,
-          })
+          await changePassword(
+            values.newPassword,
+            values.oldPassword || "",
+            user.email,
+            pathname,
+          )
             .then((res: any) => {
               if (res?.error) {
                 setError(res.error);
@@ -150,7 +140,7 @@ const SecuityContent = () => {
                     name="oldPassword"
                     render={({ field }) => (
                       <FormItem className="space-y-2">
-                       <FormLabel className="font-semibold text-slate-800">
+                        <FormLabel className="font-semibold text-slate-800">
                           Old Password
                         </FormLabel>
                         <FormControl>
@@ -172,7 +162,7 @@ const SecuityContent = () => {
                   name="newPassword"
                   render={({ field }) => (
                     <FormItem className="space-y-2">
-                     <FormLabel className="font-semibold text-slate-800">
+                      <FormLabel className="font-semibold text-slate-800">
                         New Password
                       </FormLabel>
                       <FormControl>
@@ -193,7 +183,7 @@ const SecuityContent = () => {
                   name="confirmNewPassword"
                   render={({ field }) => (
                     <FormItem className="space-y-2">
-                     <FormLabel className="font-semibold text-slate-800">
+                      <FormLabel className="font-semibold text-slate-800">
                         Confirm New Password
                       </FormLabel>
                       <FormControl>
@@ -221,11 +211,9 @@ const SecuityContent = () => {
                 </Button>
               </form>
             </Form>
-            
-                              <TwoFactorToggle user={JSON.stringify(user)} /> 
-                       
 
-           </>
+            <TwoFactorToggle user={JSON.stringify(user)} />
+          </>
         ) : (
           <Loader color="white" />
         )}
@@ -236,8 +224,7 @@ const SecuityContent = () => {
 
 export default SecuityContent;
 
-
- const TwoFactorToggle = ({ user }: { user: string }) => {
+const TwoFactorToggle = ({ user }: { user: string }) => {
   const [error, setError] = useState<string | undefined>("");
   const [success, setSuccess] = useState<string | undefined>("");
   const [isPending, setIsPending] = useState(false);
@@ -249,27 +236,26 @@ export default SecuityContent;
   const form = useForm<z.infer<typeof TwoFactorTogglerSchema>>({
     resolver: zodResolver(TwoFactorTogglerSchema),
     defaultValues: {
-      twoFactorEnabled: parsedUser?.TwoFactorEnabled ,
+      twoFactorEnabled: parsedUser?.TwoFactorEnabled,
     },
   });
 
- useEffect(() => {
-   form.setValue("twoFactorEnabled", parsedUser?.twoFactorEnabled || false);
+  useEffect(() => {
+    form.setValue("twoFactorEnabled", parsedUser?.twoFactorEnabled || false);
     const timeoutId = setTimeout(() => {
-   setInitialValuesReady(true);
+      setInitialValuesReady(true);
     }, 1000); // 1000 milliseconds = 1 second
-        return () => {
-   // Clear the timeout if the component is unmounted before the delay is complete
-    clearTimeout(timeoutId);
-  };  
-}, []); 
+    return () => {
+      // Clear the timeout if the component is unmounted before the delay is complete
+      clearTimeout(timeoutId);
+    };
+  }, []);
 
   async function onSubmit(values: z.infer<typeof TwoFactorTogglerSchema>) {
     try {
-
       setSuccess("");
       setError("");
-            setIsPending(true);
+      setIsPending(true);
 
       const res = await TwoFactorSystem({
         path: pathname,
@@ -300,7 +286,7 @@ export default SecuityContent;
           render={({ field }) => (
             <FormItem className="flex flex-row items-center justify-between rounded-lg border border-light-400 p-3 shadow-sm dark:border-light-900">
               <div className="space-y-0.5">
-                 <FormLabel className="font-semibold text-slate-800">
+                <FormLabel className="font-semibold text-slate-800">
                   Two Factor Authentication
                 </FormLabel>
                 <FormDescription className="text-slate-700">
@@ -310,7 +296,11 @@ export default SecuityContent;
               <FormControl>
                 <Switch
                   className="data-[state=checked]:bg-green-400 data-[state=unchecked]:bg-red-400"
-                  disabled={isPending || field.value === undefined || field.value === null}
+                  disabled={
+                    isPending ||
+                    field.value === undefined ||
+                    field.value === null
+                  }
                   checked={field.value}
                   onCheckedChange={field.onChange}
                 />
@@ -323,5 +313,4 @@ export default SecuityContent;
       </form>
     </Form>
   );
-}; 
- 
+};
