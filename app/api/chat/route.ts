@@ -1,9 +1,15 @@
 import { getdbUser } from "@/actions/auth.actions";
 import { getJokes, saveJoke } from "@/actions/jokes.actions";
 import { currentUser } from "@/lib/utils/currentUser";
-import { Chat, IChat, IMessage } from "@/models/chat.model";
+import { IMessage } from "@/models/chat.model";
 import { NextResponse } from "next/server";
 
+interface Message {
+  role: string;
+  parts: {
+    text: string;
+  }[];
+}
 export async function POST(req: Request) {
   try {
     const { topic } = await req.json();
@@ -13,7 +19,7 @@ export async function POST(req: Request) {
     }
     const jokes = await getJokes();
 
-    const buildGoogleGenAIPrompt = (messages: IMessage[]) => {
+    const buildGoogleGenAIPrompt = (messages: Message[]) => {
       const defaultPrompts = [
         {
           role: "user",
@@ -37,13 +43,13 @@ export async function POST(req: Request) {
         ...defaultPrompts,
         ...((jokes
           ? jokes?.chat?.messages.map(
-              (message) =>
+              (message: Message) =>
                 ({
                   role: message.role,
                   parts: message.parts.map((part) => ({ text: part.text })),
-                } as IMessage),
+                } as Message),
             )
-          : []) as IMessage[]),
+          : []) as Message[]),
         ...messages,
       ];
 
