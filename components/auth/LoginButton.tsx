@@ -2,7 +2,7 @@
 
 import { useRouter } from "next/navigation";
 import { Dialog } from "@/components/ui/dialog";
-import { DialogContent, DialogTrigger } from "@/components/ui/react-dialog";
+import { DialogContent, DialogTrigger } from "@/components/ui/dialog";
 import { LoginForm } from "@/components/auth/LoginForm";
 
 interface LoginButtonProps {
