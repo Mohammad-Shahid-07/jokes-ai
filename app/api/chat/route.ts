@@ -38,18 +38,22 @@ export async function POST(req: Request) {
           ],
         },
       ];
+      console.log(defaultPrompts, jokes, messages);
 
       const combinedMessages = [
         ...defaultPrompts,
-        ...((jokes
-          ? jokes?.chat?.messages.map(
+        ...(jokes &&
+        jokes.chat &&
+        jokes.chat.messages &&
+        jokes.chat.messages.length > 0
+          ? jokes.chat.messages.map(
               (message: Message) =>
                 ({
                   role: message.role,
                   parts: message.parts.map((part) => ({ text: part.text })),
                 } as Message),
             )
-          : []) as Message[]),
+          : []),
         ...messages,
       ];
 
