@@ -70,7 +70,7 @@ const AccountContent = () => {
       <CardHeader>
         <CardTitle className="text-slate-800 font-bold">Account</CardTitle>
         <CardDescription className="text-muted font-light">
-          Make changes to your account here. Click save when you're done.
+          Make changes to your account here. Click save when you&apos;re done.
         </CardDescription>
       </CardHeader>
       {form.getValues('name') ? (
