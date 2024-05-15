@@ -1,4 +1,4 @@
-"use client"
+"use client";
 import React from "react";
 import {
   Dialog,
@@ -20,13 +20,13 @@ import {
 import { LogOutIcon, Settings2 } from "lucide-react";
 import { signOut } from "next-auth/react";
 const UserMenu = () => {
-  const user = useCurrentUser()
-if(!user) return;
+  const user = useCurrentUser();
+  if (!user) return;
   return (
     <div>
       <Dialog>
         <DropdownMenu>
-          <DropdownMenuTrigger className="focus:bg-white data-[state-opne]:bg-white ">
+          <DropdownMenuTrigger className="focus:bg-primary data-[state-opne]:bg-primary ">
             <Image
               src={
                 user?.image ||
@@ -38,7 +38,7 @@ if(!user) return;
               className="h-9 w-9  cursor-pointer rounded-full"
             />
           </DropdownMenuTrigger>
-          <DropdownMenuContent className="bg-white mr-64 min-w-[350px] border-none p-5 shadow-xl">
+          <DropdownMenuContent className="bg-primary mr-64 min-w-[350px] border-none p-5 shadow-xl">
             <DropdownMenuLabel>
               <div className="flex items-center gap-3">
                 <Image
@@ -52,8 +52,8 @@ if(!user) return;
                   className="h-12 w-12  cursor-pointer rounded-full"
                 />
                 <div>
-       {/*[ShowUsername]*/}
-                  <p className="font-light text-gray-700 text-[10px]">
+                  {/*[ShowUsername]*/}
+                  <p className="font-light text-gray-100 text-[10px]">
                     {user?.name}
                   </p>
                 </div>
@@ -61,14 +61,14 @@ if(!user) return;
             </DropdownMenuLabel>
             <DropdownMenuSeparator />
 
-            <DropdownMenuItem className="text-slate-800  hover:bg-slate-800/25 ">
+            <DropdownMenuItem className="text-slate-100  !hover:bg-slate-800/25 ">
               <DialogTrigger className=" inline-flex cursor-pointer w-full items-center gap-5  py-3 text-sm">
                 <Settings2 />
                 <span>Manage Account</span>
               </DialogTrigger>
             </DropdownMenuItem>
 
-            <DropdownMenuItem className="text-slate-800  hover:bg-slate-800/25 ">
+            <DropdownMenuItem className="text-slate-100  hover:bg-slate-800/25 ">
               <button
                 className="inline-flex w-full items-center gap-5  py-3 text-sm "
                 onClick={() => signOut()}

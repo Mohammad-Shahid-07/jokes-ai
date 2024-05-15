@@ -1,4 +1,4 @@
-"use client"
+"use client";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import React from "react";
 import AccountContent from "@/components/user/AccountContent";
@@ -10,7 +10,7 @@ const UserSettings = () => {
     <div>
       <Tabs
         defaultValue="account"
-        className="w-[400px] bg-white shadow-md drop-shadow-lg rounded-md"
+        className="w-[400px] bg-primary shadow-md drop-shadow-lg rounded-md"
       >
         <TabsList className="flex justify-between bg-[#27272a]  items-center w-full grid-cols-3">
           <TabsTrigger

@@ -121,7 +121,7 @@ const SecuityContent = () => {
   return (
     <Card className="bg-primary border-none">
       <CardHeader>
-        <CardTitle className="text-slate-800 font-bold">Security</CardTitle>
+        <CardTitle className="text-white font-bold">Security</CardTitle>
         <CardDescription className="text-muted font-light">
           Manage you account security. Click save when you&apos;re done.
         </CardDescription>
@@ -140,7 +140,7 @@ const SecuityContent = () => {
                     name="oldPassword"
                     render={({ field }) => (
                       <FormItem className="space-y-2">
-                        <FormLabel className="font-semibold text-slate-800">
+                        <FormLabel className="font-semibold text-muted">
                           Old Password
                         </FormLabel>
                         <FormControl>
@@ -148,7 +148,7 @@ const SecuityContent = () => {
                             placeholder="Old Password"
                             type="password"
                             {...field}
-                            className="no-focus border-slate-400 text-gray-600 border"
+                             className="no-focus text-muted bg-primary border-primary-foreground/20"
                           />
                         </FormControl>
 
@@ -162,7 +162,7 @@ const SecuityContent = () => {
                   name="newPassword"
                   render={({ field }) => (
                     <FormItem className="space-y-2">
-                      <FormLabel className="font-semibold text-slate-800">
+                      <FormLabel className="font-semibold text-muted">
                         New Password
                       </FormLabel>
                       <FormControl>
@@ -170,7 +170,7 @@ const SecuityContent = () => {
                           placeholder="Type In Your New Password"
                           type="password"
                           {...field}
-                          className="no-focus border-slate-400 text-gray-600 border"
+                           className="no-focus text-muted bg-primary border-primary-foreground/20"
                         />
                       </FormControl>
 
@@ -183,7 +183,7 @@ const SecuityContent = () => {
                   name="confirmNewPassword"
                   render={({ field }) => (
                     <FormItem className="space-y-2">
-                      <FormLabel className="font-semibold text-slate-800">
+                      <FormLabel className="font-semibold text-muted">
                         Confirm New Password
                       </FormLabel>
                       <FormControl>
@@ -191,7 +191,7 @@ const SecuityContent = () => {
                           placeholder="Please Confrim Your Password"
                           type="password"
                           {...field}
-                          className="no-focus border-slate-400 text-gray-600 border"
+                           className="no-focus text-muted bg-primary border-primary-foreground/20"
                         />
                       </FormControl>
 
@@ -286,7 +286,7 @@ const TwoFactorToggle = ({ user }: { user: string }) => {
           render={({ field }) => (
             <FormItem className="flex flex-row items-center justify-between rounded-lg border border-light-400 p-3 shadow-sm dark:border-light-900">
               <div className="space-y-0.5">
-                <FormLabel className="font-semibold text-slate-800">
+                <FormLabel className="font-semibold text-muted">
                   Two Factor Authentication
                 </FormLabel>
                 <FormDescription className="text-slate-700">
