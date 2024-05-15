@@ -1,0 +1,32 @@
+{
+  "rsc": true,
+  "tsx": true,
+  "src": false,
+  "shadcn": true,
+  "providers": [
+    {
+      "name": "google",
+      "OAuth": true
+    },
+    {
+      "name": "github",
+      "OAuth": true
+    },
+    {
+      "name": "credentials",
+      "twoFactorAuth": true,
+      "username": false,
+      "emailProvider": false
+    }
+  ],
+  "db": "mongoose",
+  "aliases": {
+    "ui": "@/components",
+    "utils": "@/utils",
+    "api": "@/app/api",
+    "action": "@/actions",
+    "schemas": "@/models",
+    "pages": "@/app/(auth)",
+    "lib": "@/lib"
+  }
+}
